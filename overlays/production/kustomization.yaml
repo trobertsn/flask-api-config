@@ -11,7 +11,7 @@ resources:
 # Override the image tag for production
 images:
   - name: ghcr.io/trobertsn/flask-api
-    newTag: e3cfdadf5628ddc68e905ac86b25a57f91cfea11
+    newTag: ad65d9209508c67f4abda6b6093ad9e9c76028ef
 
 # Production runs 3 replicas
 replicas:
