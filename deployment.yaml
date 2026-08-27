@@ -18,7 +18,7 @@ spec:
         - name: flask-api
           # Your image, built by GitHub Actions, stored in GHCR
           # Using :latest for now — later we'll pin specific versions
-          image: ghcr.io/trobertsn/flask-api:latest
+          image: ghcr.io/trobertsn/flask-api:67a4b70f9c8c3b7b6f4c9def52d9ab07bd531426
           ports:
             - containerPort: 8080
           # Health checks using the /health endpoint you built
