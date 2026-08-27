@@ -1,0 +1,21 @@
+# values-postgres.yaml — our overrides for the vendored Bitnami PostgreSQL chart
+# The chart's own values.yaml is untouched; these layer on top.
+
+architecture: standalone
+
+auth:
+  username: flaskapi
+  database: flaskapi
+  # No password set here on purpose — the chart auto-generates one
+  # and stores it in a Kubernetes Secret. Never commit a password to git.
+
+primary:
+  persistence:
+    size: 2Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
