@@ -12,7 +12,7 @@ resources:
 # Override the image tag for staging
 images:
   - name: ghcr.io/trobertsn/flask-api
-    newTag: e3cfdadf5628ddc68e905ac86b25a57f91cfea11
+    newTag: c413425302664fdbfb92e4595defdb140f042ea2
 
 # Set replica count for staging
 replicas:
