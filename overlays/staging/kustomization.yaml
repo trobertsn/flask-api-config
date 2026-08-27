@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Deploy everything into the "staging" namespace
+namespace: staging
+
+# Pull in the shared base + this environment's namespace
+resources:
+  - ../../base
+  - namespace.yaml
+
+# Override the image tag for staging
+images:
+  - name: ghcr.io/trobertsn/flask-api
+    newTag: e3cfdadf5628ddc68e905ac86b25a57f91cfea11
+
+# Set replica count for staging
+replicas:
+  - name: flask-api
+    count: 1
