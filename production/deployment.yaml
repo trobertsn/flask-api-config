@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: flask-api
-          image: ghcr.io/trobertsn/flask-api:76c72b872682e084b520c008f4adfbe399ed9378
+          image: ghcr.io/trobertsn/flask-api:e3cfdadf5628ddc68e905ac86b25a57f91cfea11
           ports:
             - containerPort: 8080
           readinessProbe:
