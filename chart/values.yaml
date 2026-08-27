@@ -1,0 +1,78 @@
+# values.yaml — configuration for the Flask API chart
+# These values fill the {{ }} placeholders in the templates
+
+replicaCount: 2
+
+image:
+  repository: ghcr.io/trobertsn/flask-api    # your GHCR image
+  pullPolicy: IfNotPresent
+  tag: "c413425302664fdbfb92e4595defdb140f042ea2"   # a real SHA you built
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+# Pod-level security context (Phase 18 knowledge, now in a chart)
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+
+# Container-level security context
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+
+service:
+  type: ClusterIP
+  port: 8080          # your Flask app listens on 8080
+
+ingress:
+  enabled: false
+
+# Health probes using your /health endpoint
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 15
+
+readinessProbe:
+  httpGet:
+    path: /health
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+autoscaling:
+  enabled: false
+
+volumes: []
+volumeMounts: []
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+httpRoute:
+  enabled: false
+
+fullnameOverride: "flask-api"
