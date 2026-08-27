@@ -19,6 +19,21 @@ spec:
           image: ghcr.io/trobertsn/flask-api:latest
           ports:
             - containerPort: 8080
+          # --- DATABASE CONNECTION ---
+          env:
+            # Non-secret connection details — fine to have in git
+            - name: DB_HOST
+              value: postgresql.database.svc.cluster.local   # postgres service, cross-namespace DNS
+            - name: DB_NAME
+              value: flaskapi
+            - name: DB_USER
+              value: flaskapi
+            # The password comes from a Secret at runtime — never in git
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql     # Secret must exist in the SAME namespace as this pod
+                  key: password
           readinessProbe:
             httpGet:
               path: /health
