@@ -5,7 +5,7 @@ metadata:
   name: flask-api
   namespace: flask-api
 spec:
-  replicas: 3                    # run 2 copies for availability
+  replicas: 2                    # run 2 copies for availability
   selector:
     matchLabels:
       app: flask-api
