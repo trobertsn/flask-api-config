@@ -1,0 +1,43 @@
+# Deployment — runs your Flask API container in the cluster
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-api
+  namespace: flask-api
+spec:
+  replicas: 2                    # run 2 copies for availability
+  selector:
+    matchLabels:
+      app: flask-api
+  template:
+    metadata:
+      labels:
+        app: flask-api
+    spec:
+      containers:
+        - name: flask-api
+          # Your image, built by GitHub Actions, stored in GHCR
+          # Using :latest for now — later we'll pin specific versions
+          image: ghcr.io/trobertsn/flask-api:latest
+          ports:
+            - containerPort: 8080
+          # Health checks using the /health endpoint you built
+          readinessProbe:        # don't send traffic until this passes
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:         # restart the pod if this fails
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
